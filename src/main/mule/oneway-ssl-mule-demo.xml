@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="oneway-ssl-mule-demoServerFlow" doc:id="d9c93c16-e639-4fc5-8b22-04b9da73b2d1" >
+		<http:listener doc:name="GET: /onewaySSLServer" doc:id="7784865f-2912-41b4-8097-4a9ed03f768b" config-ref="HTTP_Listener_config" path="/onewaySSLServer"/>
+		<logger level="INFO" doc:name="ENTRY" doc:id="de88f972-ddcf-4181-a82f-2be55c6b1d49" message="ENTRY: #[flow.name]"/>
+		<set-payload value="one way ssl successfull.." doc:name="Set Payload" doc:id="3d83ba1d-7dff-468f-ba6e-7d35bcde89dc" />
+		<logger level="INFO" doc:name="EXIT" doc:id="ac95927d-a3bb-46b5-8822-35c1990c6f85" message="EXIT: #[flow.name]"/>
+	</flow>
+	<flow name="oneway-ssl-mule-demoClientFlow" doc:id="1a9a3540-ac0d-4b25-bfc7-183499b0d569" >
+		<http:listener doc:name="GET: /onewaySSLClient" doc:id="41365f1d-9dfa-48e8-9c55-1131053a541d" config-ref="HTTP_Listener_config_global" path="/onewaySSLClient"/>
+		<logger level="INFO" doc:name="ENTRY" doc:id="ec5866af-9bfb-4c3b-8d36-58c35540265d" message="ENTRY: #[flow.name]"/>
+		<http:request method="GET" doc:name="GET: /onewaySSLServer" doc:id="fb0c5311-461e-41b3-9b6c-299107a877dc" config-ref="HTTP_Request_configuration" path="/onewaySSLServer"/>
+		<logger level="INFO" doc:name="EXIT" doc:id="079697f4-bc53-4082-b0db-b375971e5053" message="EXIT: #[flow.name]"/>
+	</flow>
+</mule>

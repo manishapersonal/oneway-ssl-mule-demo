@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/http 
+http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/core 
+http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="75891d37-bf44-4358-9311-f612e2b0b8ce" >
+		<http:listener-connection host="0.0.0.0" port="${https.port}" readTimeout="${https.readTimeout}" protocol="HTTPS">
+			<tls:context >
+				<tls:key-store type="jks" path="server-keystore.jks" alias="mule-server" keyPassword="mulesoft" password="mulesoft" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="36b328c5-fadc-4725-9677-1bdfc5e359d6" file="${env}-config.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="6fdebe12-46b3-4caf-97e5-b90169d192fa" >
+		<http:request-connection protocol="HTTPS" host="${https.host}" port="${https.port}" >
+			<tls:context >
+				<tls:trust-store path="client-truststore.jks" password="mulesoft" type="jks" />
+			</tls:context>
+		</http:request-connection>
+	</http:request-config>
+	<http:listener-config name="HTTP_Listener_config_global" doc:name="HTTP Listener config" doc:id="ff7a1126-55aa-476c-906b-9fcc685464c1" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="${http.readTimeout}"/>
+	</http:listener-config>
+
+</mule>
